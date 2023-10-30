@@ -1,39 +1,37 @@
-import { Fragment, useState, useEffect } from "react";
-import axios from "axios";
+import { Fragment, useState } from "react";
 
 function App() {
+  // Since this data won't be changed, we won't use useState
+  const topAnimes = [
+    {
+      title: "Steins;Gate",
+      imageUrl: "https://cdn.myanimelist.net/images/anime/1935/127974.jpg",
+      totalEpisodes: 24,
+      status: "Finished Airing",
+    },
+    {
+      title: "Gintama°",
+      imageUrl: "https://cdn.myanimelist.net/images/anime/3/72078.jpg",
+      totalEpisodes: 51,
+      status: "Finished Airing",
+    },
+    {
+      title: "Shingeki no Kyojin Season 3 Part 2",
+      imageUrl: "https://cdn.myanimelist.net/images/anime/1517/100633.jpg",
+      totalEpisodes: 10,
+      status: "Finished Airing",
+    },
+  ];
+
   const [showOrHideComponentName, setShowOrHideComponentName] = useState(false);
   const [whichContent, setWhichContent] = useState("home");
   const [stateData, setStateData] = useState("");
   const [formInputData, setFormInputData] = useState("");
-  const [topAnimes, setTopAnimes] = useState([]);
-
-  const fetchDataFromJikan = async () => {
-    try {
-      const { data } = await axios.get(`https://api.jikan.moe/v4/top/anime`);
-      setTopAnimes(
-        data.data
-          .map((anime) => ({
-            title: anime.title,
-            imageUrl: anime.images?.jpg?.image_url,
-            totalEpisodes: anime.episodes,
-            status: anime.status,
-          }))
-          .slice(1, 4)
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const formSubmissionOnClickHandler = (e) => {
     e.preventDefault();
     setStateData(formInputData);
   };
-
-  useEffect(() => {
-    fetchDataFromJikan();
-  }, []);
 
   return (
     <>
